@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WebRTC Calling Studio</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #556b78; /* স্ক্রিনশটের মতো ডার্ক স্লেট কালার */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #main-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            background-color: #556b78;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            overflow-y: auto;
+        }
+
+        /* ১. অনলাইন/অফলাইন কার্ড বক্স */
+        .user-panel {
+            background-color: #121927;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-panel-header {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .user-card {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #334155;
+            transition: all 0.2s;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444; /* অফলাইন লাল */
+        }
+
+        .status-dot.online {
+            background-color: #22c55e; /* অনলাইন সবুজ */
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        .user-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .user-subtext {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .btn-status-call {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #334155;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-status-call.btn-active {
+            background-color: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        /* ২. কন্ট্রোল বাটন বক্স গ্রিড (linear15, 17, 18, 19) */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .ctrl-box {
+            background-color: #1e293b;
+            aspect-ratio: 1 / 1;
+            border-radius: 14px;
+            border: 2px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: 0.2s transform, 0.2s background-color;
+        }
+
+        .ctrl-box:active {
+            transform: scale(0.93);
+        }
+
+        .ctrl-box svg {
+            width: 28px;
+            height: 28px;
+            fill: #94a3b8;
+        }
+
+        .ctrl-box.active {
+            background-color: #0f172a;
+            border-color: #3b82f6;
+        }
+
+        .ctrl-box.active svg {
+            fill: #3b82f6;
+        }
+
+        /* ৩. নেটওয়ার্ক পিং ইন্ডিকেটর */
+        .ping-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .ping-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+        }
+
+        .ping-val {
+            color: #eab308; /* মিডিয়াম ইয়োলো */
+            font-weight: 700;
+        }
+
+        .ping-good { color: #00E676 !important; }
+        .ping-med { color: #FFD600 !important; }
+        .ping-slow { color: #FF1744 !important; }
+
+        /* ৪. স্পিকার চেঞ্জ ও কল কাট বাটন */
+        .bottom-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .speaker-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 16px;
+            background: transparent;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        .speaker-bar svg {
+            width: 32px;
+            height: 32px;
+            fill: #78909c;
+        }
+
+        .speaker-text {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #37474f;
+        }
+
+        .btn-hangup {
+            background-color: #ef4444;
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        /* ৫. ফুল ভিউ ও PIP ভিডিও স্ট্রিমিং */
+        #video-viewport {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 100;
+            display: none;
+        }
+
+        #remoteVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #localVideo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 110px;
+            height: 160px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            transform: scaleX(-1);
+            background-color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+<!-- মূল কন্টেইনার (UI স্ক্রিন) -->
+<div id="main-container">
+    
+    <!-- ইউজার অনলাইন/অফলাইন প্যানেল -->
+    <div class="user-panel">
+        <div class="user-panel-header">USERS ONLINE / OFFLINE</div>
+        <div class="user-list" id="userListContainer">
+            <!-- ইউজারের লিস্ট ডায়নামিক্যালি আসবে -->
+            <div class="user-card" id="user-Sarfaraj">
+                <div class="user-info">
+                    <div class="status-dot" id="dot-Sarfaraj"></div>
+                    <div>
+                        <div class="user-name">Sarfaraj</div>
+                        <div class="user-subtext" id="sub-Sarfaraj">Offline</div>
+                    </div>
+                </div>
+                <button class="btn-status-call" onclick="callTargetUser('Sarfaraj')">Call</button>
+            </div>
+
+            <div class="user-card" id="user-Ckk">
+                <div class="user-info">
+                    <div class="status-dot" id="dot-Ckk"></div>
+                    <div>
+                        <div class="user-name">Ckk</div>
+                        <div class="user-subtext" id="sub-Ckk">Offline</div>
+                    </div>
+                </div>
+                <button class="btn-status-call" onclick="callTargetUser('Ckk')">Call</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ৪টি কন্ট্রোল বক্স (ক্যামেরা সুইচ, ভিডিও টগল, মাইক, নয়েজ) -->
+    <div class="controls-grid">
+        <!-- ১. Camera Flip -->
+        <div class="ctrl-box" id="boxCamSwitch" onclick="toggleCamera()">
+            <svg viewBox="0 0 24 24"><path d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm3.2-5c0-.66-.54-1.2-1.2-1.2s-1.2.54-1.2 1.2.54 1.2 1.2 1.2 1.2-.54 1.2-1.2z"/></svg>
+        </div>
+
+        <!-- ২. Video On/Off -->
+        <div class="ctrl-box" id="boxVideo" onclick="toggleVideo()">
+            <svg viewBox="0 0 24 24"><path d="M21 6.5l-4 4V7c0-.55-.45-1-1-1H9.82L21 17.18V6.5zM3.27 2L2 3.27 4.73 6H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.21 0 .39-.08.54-.18L19.73 21 21 19.73 3.27 2zM5 16V8h1.27l8 8H5z"/></svg>
+        </div>
+
+        <!-- ৩. Mic On/Off -->
+        <div class="ctrl-box active" id="boxMic" onclick="toggleMic()">
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+        </div>
+
+        <!-- ৪. Noise Suppression -->
+        <div class="ctrl-box active" id="boxNoise" onclick="toggleNoise()">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </div>
+    </div>
+
+    <!-- লাইভ নেটওয়ার্ক পিং স্ট্যাটাস -->
+    <div class="ping-section">
+        <div class="ping-row">
+            <span>My Network :-</span>
+            <span class="ping-val ping-med" id="txtMyPing">My Network: 116 ms (Medium)</span>
+        </div>
+        <div class="ping-row">
+            <span>Caller Network :-</span>
+            <span class="ping-val" id="txtCallerPing" style="color: #64748b;">TextView</span>
+        </div>
+    </div>
+
+    <!-- বটম অ্যাকশন -->
+    <div class="bottom-actions">
+        <div class="speaker-bar" onclick="triggerSpeakerDialog()">
+            <svg viewBox="0 0 24 24"><path d="M17 18H7V6h10v12zm0-16H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h6v1H9V4zm3 17a1 1 0 100-2 1 1 0 000 2zm6.7-14.7l-1.4 1.4A5.96 5.96 0 0119 12c0 1.66-.68 3.16-1.77 4.24l1.41 1.41C20.06 16.23 21 14.22 21 12c0-2.22-.94-4.23-2.3-5.7zM4.7 6.3C3.34 7.77 2.4 9.78 2.4 12c0 2.22.94 4.23 2.3 5.7l1.4-1.41A5.96 5.96 0 014.4 12c0-1.66.68-3.16 1.77-4.24L4.7 6.3z"/></svg>
+            <div class="speaker-text">SPEAKER CHANGE</div>
+        </div>
+
+        <button class="btn-hangup" id="btnHangup" onclick="hangupCall()">
+            ❌ END CALL
+        </button>
+    </div>
+</div>
+
+<!-- ভিডিও স্ট্রিমিং ফুল ভিউ লেয়ার -->
+<div id="video-viewport">
+    <video id="remoteVideo" autoplay playsinline></video>
+    <video id="localVideo" autoplay playsinline muted></video>
+</div>
+
+<script>
+    // --- ১. ফায়ারবেস কনফিগারেশন (আপনার আসল ফায়ারবেস ক্রেডেনশিয়াল) ---
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
+
+    // --- ২. ভ্যারিয়েবল ও স্টেট ---
+    let localStream = null;
+    let remoteStream = null;
+    let peerConnection = null;
+    let currentDeviceId = "WebUser_" + Math.floor(1000 + Math.random() * 9000);
+    let currentSessionId = null;
+    let targetCallerId = null;
+    let pingTimer = null;
+    let isFrontCam = true;
+    let isVideoOn = false;
+    let isMicOn = true;
+    let isNoiseOn = true;
+
+    const rtcConfig = {
+        iceServers: [
+            { urls: "stun:stun.l.google.com:19302" },
+            { urls: "stun:stun1.l.google.com:19302" },
+            { urls: "stun:stun2.l.google.com:19302" }
+        ]
+    };
+
+    const txtMyPing = document.getElementById("txtMyPing");
+    const txtCallerPing = document.getElementById("txtCallerPing");
+    const videoViewport = document.getElementById("video-viewport");
+    const remoteVideo = document.getElementById("remoteVideo");
+    const localVideo = document.getElementById("localVideo");
+
+    // অ্যান্ড্রয়েড অ্যাপ ব্রিজ
+    function sendToAndroid(method, data) {
+        if (window.AndroidApp && typeof window.AndroidApp[method] === "function") {
+            if (data !== undefined) window.AndroidApp[method](data);
+            else window.AndroidApp[method]();
+        }
+    }
+
+    // --- ৩. পেজ ও প্রেজেন্স ইনিট ---
+    window.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlId = urlParams.get("id");
+        if (urlId) currentDeviceId = urlId;
+
+        initApp(currentDeviceId);
+
+        const autoCall = urlParams.get("call");
+        if (autoCall) {
+            callTargetUser(autoCall);
+        }
+    });
+
+    function initApp(devId) {
+        currentDeviceId = devId;
+        setupPresence();
+        listenForIncomingCalls();
+        setupLocalMedia(false);
+    }
+
+    // অনলাইন প্রেজেন্স লিসেনার
+    function setupPresence() {
+        const userRef = db.ref("users/" + currentDeviceId);
+        db.ref(".info/connected").on("value", snap => {
+            if (snap.val() === true) {
+                userRef.onDisconnect().set({ status: "offline", last_seen: firebase.database.ServerValue.TIMESTAMP });
+                userRef.set({ status: "online", name: currentDeviceId });
+            }
+        });
+
+        // অন্য ইউজারদের অনলাইন/অফলাইন ট্র্যাক
+        db.ref("users").on("value", snapshot => {
+            const users = snapshot.val();
+            if (!users) return;
+            Object.keys(users).forEach(id => {
+                const isOnline = users[id].status === "online";
+                const dot = document.getElementById("dot-" + id);
+                const sub = document.getElementById("sub-" + id);
+                if (dot && sub) {
+                    dot.className = "status-dot " + (isOnline ? "online" : "");
+                    sub.innerText = isOnline ? "Online" : "Offline";
+                    sub.style.color = isOnline ? "#22c55e" : "#64748b";
+                }
+            });
+        });
+    }
+
+    // --- ৪. লোকাল মিডিয়া সেটআপ ---
+    async function setupLocalMedia(enableVideo) {
+        try {
+            if (localStream) {
+                localStream.getTracks().forEach(t => t.stop());
+            }
+
+            const constraints = {
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: isNoiseOn,
+                    autoGainControl: true
+                },
+                video: enableVideo ? {
+                    facingMode: isFrontCam ? "user" : "environment",
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                } : false
+            };
+
+            localStream = await navigator.mediaDevices.getUserMedia(constraints);
+            localVideo.srcObject = localStream;
+            localVideo.style.display = enableVideo ? "block" : "none";
+            videoViewport.style.display = enableVideo ? "block" : "none";
+
+            if (peerConnection) {
+                const senders = peerConnection.getSenders();
+                localStream.getTracks().forEach(track => {
+                    const sender = senders.find(s => s.track && s.track.kind === track.kind);
+                    if (sender) sender.replaceTrack(track);
+                    else peerConnection.addTrack(track, localStream);
+                });
+            }
+        } catch (err) {
+            sendToAndroid("showToast", "Camera/Mic Error: " + err.message);
+        }
+    }
+
+    // --- ৫. কলিং প্রসেস ও অ্যানসার ---
+    async function callTargetUser(targetId) {
+        targetCallerId = targetId;
+        currentSessionId = "sess_" + Date.now();
+        createPeerConnection("sessions/" + currentSessionId);
+
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        db.ref("calls/" + targetId).set({
+            callerId: currentDeviceId,
+            sessionId: currentSessionId,
+            offer: offer.toJSON(),
+            status: "ringing"
+        });
+
+        db.ref("sessions/" + currentSessionId + "/answer").on("value", async snap => {
+            const answer = snap.val();
+            if (answer && !peerConnection.currentRemoteDescription) {
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+            }
+        });
+    }
+
+    function listenForIncomingCalls() {
+        db.ref("calls/" + currentDeviceId).on("value", async snap => {
+            const data = snap.val();
+            if (data && data.status === "ringing" && !peerConnection) {
+                currentSessionId = data.sessionId;
+                targetCallerId = data.callerId;
+                sendToAndroid("playRingtone");
+
+                createPeerConnection("sessions/" + data.sessionId);
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+
+                db.ref("sessions/" + data.sessionId + "/answer").set(answer.toJSON());
+                db.ref("calls/" + currentDeviceId + "/status").set("connected");
+            }
+        });
+    }
+
+    // --- ৬. WebRTC কানেকশন তৈরি ---
+    function createPeerConnection(sessionPath) {
+        peerConnection = new RTCPeerConnection(rtcConfig);
+        const sessionRef = db.ref(sessionPath);
+
+        if (localStream) {
+            localStream.getTracks().forEach(t => peerConnection.addTrack(t, localStream));
+        }
+
+        peerConnection.ontrack = (event) => {
+            if (!remoteStream) {
+                remoteStream = new MediaStream();
+                remoteVideo.srcObject = remoteStream;
+            }
+            remoteStream.addTrack(event.track);
+        };
+
+        peerConnection.onicecandidate = (event) => {
+            if (event.candidate) {
+                sessionRef.child("candidates").push(event.candidate.toJSON());
+            }
+        };
+
+        peerConnection.onconnectionstatechange = () => {
+            if (peerConnection.connectionState === "connected") {
+                sendToAndroid("stopRingtone");
+                sendToAndroid("onCallConnected");
+                startPingCalculation();
+            } else if (["disconnected", "failed", "closed"].includes(peerConnection.connectionState)) {
+                hangupCall();
+            }
+        };
+
+        sessionRef.child("candidates").on("child_added", snap => {
+            peerConnection.addIceCandidate(new RTCIceCandidate(snap.val())).catch(() => {});
+        });
+    }
+
+    // --- ৭. লাইভ পিং মনিটর ---
+    function startPingCalculation() {
+        if (pingTimer) clearInterval(pingTimer);
+        
+        pingTimer = setInterval(async () => {
+            if (peerConnection && peerConnection.getStats) {
+                const stats = await peerConnection.getStats();
+                stats.forEach(report => {
+                    if (report.type === "candidate-pair" && report.state === "succeeded") {
+                        if (report.currentRoundTripTime) {
+                            const rtt = Math.round(report.currentRoundTripTime * 1000);
+                            
+                            // UI পিং আপডেট
+                            let statusText = " (Good)";
+                            let colorClass = "ping-good";
+                            if (rtt > 180) { statusText = " (Slow!)"; colorClass = "ping-slow"; }
+                            else if (rtt > 80) { statusText = " (Medium)"; colorClass = "ping-med"; }
+
+                            txtMyPing.innerText = `My Network: ${rtt} ms${statusText}`;
+                            txtMyPing.className = `ping-val ${colorClass}`;
+
+                            sendToAndroid("updateMyPing", rtt);
+
+                            if (currentSessionId) {
+                                db.ref("sessions/" + currentSessionId + "/pings/" + currentDeviceId).set(rtt);
+                            }
+                        }
+                    }
+                });
+            }
+        }, 2000);
+
+        if (currentSessionId) {
+            db.ref("sessions/" + currentSessionId + "/pings").on("value", snapshot => {
+                const pings = snapshot.val();
+                if (pings) {
+                    Object.keys(pings).forEach(id => {
+                        if (id !== currentDeviceId) {
+                            const p = pings[id];
+                            let cText = " (Good)";
+                            let cClass = "ping-good";
+                            if (p > 180) { cText = " (Slow!)"; cClass = "ping-slow"; }
+                            else if (p > 80) { cText = " (Medium)"; cClass = "ping-med"; }
+
+                            txtCallerPing.innerText = `Caller Network: ${p} ms${cText}`;
+                            txtCallerPing.className = `ping-val ${cClass}`;
+                            sendToAndroid("updateCallerPing", p);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    // --- ৮. বাটন ও কন্ট্রোল অ্যাকশনস ---
+    window.toggleCamera = async function() {
+        isFrontCam = !isFrontCam;
+        localVideo.style.transform = isFrontCam ? "scaleX(-1)" : "scaleX(1)";
+        await setupLocalMedia(isVideoOn);
+    };
+
+    window.toggleVideo = async function() {
+        isVideoOn = !isVideoOn;
+        document.getElementById("boxVideo").className = "ctrl-box " + (isVideoOn ? "active" : "");
+        await setupLocalMedia(isVideoOn);
+    };
+
+    window.toggleMic = function() {
+        isMicOn = !isMicOn;
+        document.getElementById("boxMic").className = "ctrl-box " + (isMicOn ? "active" : "");
+        if (localStream) {
+            const track = localStream.getAudioTracks()[0];
+            if (track) track.enabled = isMicOn;
+        }
+    };
+
+    window.toggleNoise = async function() {
+        isNoiseOn = !isNoiseOn;
+        document.getElementById("boxNoise").className = "ctrl-box " + (isNoiseOn ? "active" : "");
+        await setupLocalMedia(isVideoOn);
+        sendToAndroid("showToast", isNoiseOn ? "Noise Cancellation ON" : "Noise Cancellation OFF");
+    };
+
+    function triggerSpeakerDialog() {
+        sendToAndroid("showToast", "Speaker control accessed");
+    }
+
+    window.hangupCallFromAndroid = function() {
+        hangupCall();
+    };
+
+    function hangupCall() {
+        if (pingTimer) clearInterval(pingTimer);
+
+        if (localStream) {
+            localStream.getTracks().forEach(t => t.stop());
+            localStream = null;
+        }
+
+        if (peerConnection) {
+            peerConnection.close();
+            peerConnection = null;
+        }
+
+        if (currentSessionId) {
+            db.ref("sessions/" + currentSessionId).remove();
+            currentSessionId = null;
+        }
+
+        if (currentDeviceId) {
+            db.ref("calls/" + currentDeviceId).remove();
+        }
+
+        remoteVideo.srcObject = null;
+        localVideo.srcObject = null;
+        videoViewport.style.display = "none";
+        
+        txtCallerPing.innerText = "TextView";
+        txtCallerPing.style.color = "#64748b";
+
+        sendToAndroid("stopRingtone");
+        sendToAndroid("onCallEnded");
+    }
+</script>
+</body>
+</html>
