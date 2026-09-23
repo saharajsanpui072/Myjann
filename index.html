@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SAHARAJ EXE - Ultimate Key Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --card-bg: rgba(14, 17, 27, 0.94);
+      --card-border: rgba(0, 240, 255, 0.22);
+      --neon-cyan: #00f0ff;
+      --neon-purple: #9d4edd;
+      --neon-green: #00ff88;
+      --neon-red: #ff0055;
+      --neon-gold: #ffb703;
+      --text-main: #f0f4f8;
+      --text-muted: #8a99ad;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rajdhani', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(0, 240, 255, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(157, 78, 221, 0.09) 0%, transparent 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    /* ============================================================
+       TOP HEADER WITH ROUND AVATAR & LIGHTNING ARC EFFECT
+       ============================================================ */
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 16px 14px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: 0 4px 28px rgba(0, 240, 255, 0.15);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* আসল বজ্রপাতের মতো সরু আলোর ঝলকানি অ্যানিমেশন */
+    .avatar-lightning-wrapper {
+      position: relative;
+      width: 86px;
+      height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    /* গোল রাউন্ড ফটো ফ্রেম */
+    .avatar-circle-frame {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.4);
+      background: #000;
+      z-index: 2;
+    }
+
+    .avatar-circle-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+    }
+
+    /* ইলেকট্রিক লাইটনিং গ্লো ও রিং */
+    .avatar-lightning-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      box-shadow: 0 0 10px var(--neon-cyan);
+      animation: lightningShock 2.2s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* বজ্রপাতের সরু সরু বিদ্যুৎ আঁকার ক্যানভাস লেয়ার */
+    .lightning-canvas {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes lightningShock {
+      0%, 100% {
+        box-shadow: 0 0 8px rgba(0, 240, 255, 0.3), inset 0 0 4px rgba(0, 240, 255, 0.2);
+        border-color: rgba(0, 240, 255, 0.2);
+        filter: brightness(1);
+      }
+      82% {
+        box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        border-color: rgba(0, 240, 255, 0.2);
+      }
+      85% {
+        box-shadow: 0 0 25px #00f0ff, 0 0 40px #ffffff, inset 0 0 15px #00f0ff;
+        border-color: #ffffff;
+        filter: brightness(1.8) contrast(1.4);
+      }
+      88% {
+        box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+        border-color: var(--neon-cyan);
+      }
+      90% {
+        box-shadow: 0 0 35px #00f0ff, 0 0 50px #9d4edd, inset 0 0 20px #ffffff;
+        border-color: #ffffff;
+        filter: brightness(2);
+      }
+      94% {
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        border-color: rgba(0, 240, 255, 0.3);
+      }
+    }
+
+    /* ফটোর নিচে স্টাইলিশ লোগো টেক্সট */
+    .brand-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ffffff via #00f0ff to #9d4edd);
+      background: -webkit-linear-gradient(0deg, #ffffff 0%, #00f0ff 50%, #d8b4fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    }
+
+    .status-badge {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--neon-green);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+    }
+
+    .whatsapp-support-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background-color: #00e676;
+      border: 2px solid #ff1744;
+      border-radius: 50px;
+      padding: 5px 14px;
+      box-shadow: 0 0 12px rgba(255, 23, 68, 0.45);
+      transition: transform 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .whatsapp-support-badge:active {
+      transform: scale(0.96);
+    }
+
+    .whatsapp-support-text {
+      color: #001f54;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-purple));
+    }
+
+    .user-info-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .user-name-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .profile-trigger:active {
+      transform: scale(0.96);
+    }
+
+    .profile-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .user-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .strip-wallet-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 10px;
+      height: 44px;
+    }
+
+    .strip-wallet-amt {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      color: var(--neon-green);
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.35);
+    }
+
+    .btn-deposit-strip {
+      height: 44px;
+      background: linear-gradient(90deg, #00f0ff, #0072ff);
+      border: none;
+      color: #000;
+      font-weight: 800;
+      font-size: 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+      white-space: nowrap;
+      transition: transform 0.2s;
+    }
+
+    .btn-deposit-strip:active {
+      transform: scale(0.96);
+    }
+
+    .action-card-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 15px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .action-card-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-purple));
+    }
+
+    .action-card-btn:active {
+      transform: scale(0.97);
+      border-color: var(--neon-cyan);
+    }
+
+    /* FULLSCREEN STORE SCREEN */
+    .store-screen-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #07090e;
+      z-index: 50000;
+      display: none;
+      flex-direction: column;
+      padding: 14px;
+      overflow-y: auto;
+    }
+
+    .store-header-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      max-width: 480px;
+      width: 100%;
+      margin-inline: auto;
+    }
+
+    .btn-back-circle {
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--neon-cyan);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .btn-back-circle:active {
+      background: var(--neon-cyan);
+      color: #000;
+    }
+
+    .search-box-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(14, 17, 27, 0.95);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 25px;
+      padding: 10px 16px 10px 38px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+
+    .search-icon-pos {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--neon-cyan);
+      font-size: 14px;
+    }
+
+    .gadgets-vertical-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 480px;
+      margin-inline: auto;
+      padding-bottom: 30px;
+    }
+
+    .gadget-card-row {
+      background: linear-gradient(145deg, rgba(20, 25, 38, 0.95), rgba(11, 14, 22, 0.98));
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s;
+    }
+
+    .gadget-card-row:active {
+      transform: scale(0.98);
+      border-color: var(--neon-cyan);
+    }
+
+    .gadget-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gadget-title-flex {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gadget-thumb-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--neon-cyan);
+      object-fit: cover;
+      background: rgba(0, 240, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .gadget-thumb-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gadget-name-style {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .gadget-desc-style {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .gadget-footer-style {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .btn-gadget-setup {
+      background: linear-gradient(90deg, #9d4edd, #00f0ff);
+      border: none;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+    }
+
+    /* OVERLAY HIERARCHY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #0d101a;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 18px;
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.28);
+      position: relative;
+    }
+
+    .input-box {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    .input-box:focus {
+      border-color: var(--neon-cyan);
+    }
+
+    .btn-action {
+      width: 100%;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+
+    .btn-action:active {
+      filter: brightness(1.2);
+    }
+
+    .btn-modal-close {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 8px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pkg-grid-compact {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+      max-height: 280px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+
+    .pkg-card-slim {
+      background: linear-gradient(145deg, rgba(20, 24, 38, 0.9), rgba(12, 14, 22, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .pkg-card-slim:active {
+      transform: scale(0.96);
+    }
+
+    .pkg-card-slim.active {
+      background: linear-gradient(145deg, rgba(0, 240, 255, 0.15), rgba(18, 22, 35, 0.95));
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+    }
+
+    .pkg-card-slim.sold-out {
+      opacity: 0.55;
+      border-color: rgba(255, 0, 85, 0.4);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .pkg-name-slim {
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .pkg-tag-slim {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--neon-green);
+      background: rgba(0, 255, 136, 0.12);
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-sold-out {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      color: #fff;
+      background: var(--neon-red);
+      padding: 2px 6px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-disc {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      color: #000;
+      background: var(--neon-gold);
+      padding: 1px 5px;
+      border-radius: 6px;
+    }
+
+    .btn-buy-slim {
+      width: 100%;
+      background: linear-gradient(90deg, #00f0ff, #7000ff, #00f0ff);
+      background-size: 200% auto;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+      margin-top: 4px;
+    }
+
+    .cyber-spinner {
+      width: 55px;
+      height: 55px;
+      border: 4px solid rgba(0, 240, 255, 0.15);
+      border-top: 4px solid var(--neon-cyan);
+      border-bottom: 4px solid var(--neon-purple);
+      border-radius: 50%;
+      animation: spinCyber 1s linear infinite;
+      margin: 15px auto;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+    }
+
+    @keyframes spinCyber {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .qr-frame {
+      background: #fff;
+      padding: 8px;
+      border-radius: 12px;
+      width: 170px;
+      height: 170px;
+      margin: 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-frame img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .key-screen {
+      background: #000;
+      border: 1px dashed var(--neon-green);
+      border-radius: 10px;
+      padding: 12px;
+      color: var(--neon-green);
+      font-family: monospace;
+      font-size: 15px;
+      word-break: break-all;
+      margin: 12px 0;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      border: 1px solid var(--neon-cyan);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+      z-index: 120000;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-bar">
+      
+      <!-- DYNAMIC ROUND LOGO WITH 2-SECOND ELECTRIC LIGHTNING SPARK -->
+      <div class="avatar-lightning-wrapper">
+        <canvas id="lightningCanvas" class="lightning-canvas" width="110" height="110"></canvas>
+        <div class="avatar-lightning-ring"></div>
+        <div class="avatar-circle-frame">
+          <img id="imgBrandLogo" src="https://cdn-icons-png.flaticon.com/512/3616/3616930.png" alt="Brand Logo" />
+        </div>
+      </div>
+
+      <!-- STYLISH BRAND NAME UNDER LOGO -->
+      <div class="brand-title" id="lblBrandName">
+        SAHARAJ EXE
+      </div>
+
+      <div class="status-badge" id="lblLiveStatus">
+        <i class="fa-solid fa-bolt"></i> 24/7 ONLINE
+      </div>
+      
+      <a href="https://wa.me/916289600365" target="_blank" class="whatsapp-support-badge">
+        <span class="whatsapp-support-text">
+          <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> WhatsApp Support Owner +91 6289600365
+        </span>
+      </a>
+    </div>
+
+    <!-- Auth View -->
+    <div id="viewAuth" class="card">
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: var(--neon-cyan); margin-bottom: 12px;">USER ACCESS</h3>
+      <input type="text" id="inputUsername" class="input-box" placeholder="Enter Username (e.g. saharaj)" />
+      <input type="password" id="inputPassword" class="input-box" placeholder="Enter Password" />
+      <button class="btn-action" onclick="loginUser()">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </button>
+      <button class="btn-action" style="background: rgba(255,255,255,0.06); margin-top: 8px;" onclick="registerUser()">
+        <i class="fa-solid fa-user-plus"></i> Create Account
+      </button>
+    </div>
+
+    <!-- Portal View -->
+    <div id="viewPortal" style="display: none; flex-direction: column; gap: 12px;">
+      
+      <!-- Wallet & Profile Bar -->
+      <div class="card">
+        <div class="user-info-section">
+          <div class="user-name-line">
+            <div class="profile-trigger" onclick="openProfileModal()">
+              <i class="fa-solid fa-user-gear" style="color: var(--neon-cyan);"></i>
+              <span class="profile-name" id="lblUser">---</span>
+              <i class="fa-solid fa-chevron-right" style="font-size: 9px; color: var(--text-muted);"></i>
+            </div>
+            <span style="font-size: 11px; color: var(--neon-green); font-weight: 700;"><i class="fa-solid fa-circle-check"></i> ACTIVE</span>
+          </div>
+
+          <div class="user-action-grid">
+            <div class="strip-wallet-box">
+              <span style="font-size: 10px; color: var(--text-muted); font-weight: 700;">WALLET BALANCE</span>
+              <div class="strip-wallet-amt">₹<span id="lblBalance">0.00</span></div>
+            </div>
+
+            <button class="btn-deposit-strip" onclick="openDepositHub()">
+              <i class="fa-solid fa-wallet"></i> DEPOSIT & HISTORY
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Action 1: BUY NOW BUTTON -->
+      <div class="action-card-btn" onclick="openFullscreenStore()">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <i class="fa-solid fa-cart-shopping" style="font-size: 24px; color: var(--neon-cyan);"></i>
+          <div>
+            <div style="font-family: 'Teko'; font-size: 24px; line-height: 1; color: #fff;">BUY NOW</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Browse all gadgets and instant activation keys</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right-long" style="color: var(--neon-cyan); font-size: 20px;"></i>
+      </div>
+
+      <!-- Main Action 2: MY PURCHASED KEYS -->
+      <div class="action-card-btn" onclick="openKeyHistoryModal()">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <i class="fa-solid fa-clock-rotate-left" style="font-size: 24px; color: var(--neon-green);"></i>
+          <div>
+            <div style="font-family: 'Teko'; font-size: 24px; line-height: 1; color: #fff;">MY PURCHASED KEYS</div>
+            <div style="font-size: 12px; color: var(--text-muted);">View all purchased keys with full details</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-arrow-right-long" style="color: var(--neon-green); font-size: 20px;"></i>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FULLSCREEN GADGET STORE SCREEN -->
+  <div id="screenGadgetStore" class="store-screen-fullscreen">
+    <div class="store-header-bar">
+      <button class="btn-back-circle" onclick="closeFullscreenStore()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <div class="search-box-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon-pos"></i>
+        <input type="text" id="inputGadgetSearch" class="search-input" placeholder="Search gadget name..." oninput="handleGadgetSearch()" />
+      </div>
+    </div>
+
+    <!-- Vertical List of Gadgets -->
+    <div class="gadgets-vertical-list" id="storeGadgetsContainer">
+      <div style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 25px 0;">Loading available gadgets...</div>
+    </div>
+  </div>
+
+  <!-- POPUP: CHOOSE PACKAGE FROM SELECTED GADGET -->
+  <div id="modalBuyList" class="overlay">
+    <div class="modal-box">
+      <h3 style="font-family: 'Teko'; font-size: 24px; color: var(--neon-cyan); margin-bottom: 2px;" id="lblSelectedGadgetTitle">CHOOSE PACKAGE</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px;">Select a license duration to purchase:</p>
+      
+      <div class="pkg-grid-compact" id="modalPkgGrid"></div>
+
+      <button id="btnBuy" class="btn-buy-slim" onclick="initiateStepOne()">
+        <i class="fa-solid fa-bolt"></i> BUY NOW
+      </button>
+
+      <button class="btn-modal-close" onclick="closeBuyListModal(true)">
+        <i class="fa-solid fa-xmark"></i> Close
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: CUSTOM INSUFFICIENT BALANCE MODAL -->
+  <div id="modalLowBalance" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-gold); box-shadow: 0 0 35px rgba(255, 183, 3, 0.35);">
+      <i class="fa-solid fa-wallet" style="font-size: 44px; color: var(--neon-gold); margin-bottom: 8px;"></i>
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: #fff; letter-spacing: 1px;">INSUFFICIENT BALANCE</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin: 8px 0 4px 0;">
+        You don't have enough funds in your wallet to buy <span id="lblLowBalPkg" style="color: var(--neon-cyan); font-weight: 700;">---</span>.
+      </p>
+      <div style="font-size: 13px; color: #fff; margin-bottom: 14px;">
+        Required: <span id="lblLowBalReq" style="color: var(--neon-green); font-weight: 700;">₹0</span> | Available: <span id="lblLowBalCur" style="color: var(--neon-red); font-weight: 700;">₹0</span>
+      </div>
+
+      <button class="btn-action" style="background: linear-gradient(90deg, #ffb703, #ff0055); margin-bottom: 6px;" onclick="goToDepositFromLowBal()">
+        <i class="fa-solid fa-plus-circle"></i> Deposit Now (UPI)
+      </button>
+      <button class="btn-modal-close" onclick="closeLowBalModal()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: CONFIRMATION STEP 1 -->
+  <div id="modalConfirmStep1" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-cyan);">
+      <i class="fa-solid fa-circle-question" style="font-size: 42px; color: var(--neon-cyan); margin-bottom: 8px;"></i>
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: #fff;">PURCHASE CONFIRMATION</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin: 10px 0 16px 0;">
+        Are you sure you want to purchase <span id="lblConfirmPkg1" style="color: var(--neon-cyan); font-weight: 700;">---</span> for <span id="lblConfirmPrice1" style="color: var(--neon-green); font-weight: 700;">₹0</span>?
+      </p>
+
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-action" onclick="proceedToStepTwo()">Continue</button>
+        <button class="btn-modal-close" style="margin-top:0;" onclick="closeConfirmStep1()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP: CONFIRMATION STEP 2 -->
+  <div id="modalConfirmStep2" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-gold); box-shadow: 0 0 35px rgba(255, 183, 3, 0.3);">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 42px; color: var(--neon-gold); margin-bottom: 8px;"></i>
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: #fff;">FINAL WARNING</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin: 10px 0 16px 0;">
+        Final Confirmation: <span id="lblConfirmPrice2" style="color: var(--neon-green); font-weight: 700;">₹0</span> will be deducted from your wallet balance. Confirm purchase?
+      </p>
+
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-action" style="background: linear-gradient(90deg, #ffb703, #ff0055);" onclick="executeFinalPurchase()">YES, BUY NOW</button>
+        <button class="btn-modal-close" style="margin-top:0;" onclick="closeConfirmStep2()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP: LOADING -->
+  <div id="modalLoading" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-cyan);">
+      <div class="cyber-spinner"></div>
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: var(--neon-cyan); letter-spacing: 1px;">PROCESSING PURCHASE</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Connecting provider and generating secure key...</p>
+      <p style="font-size: 11px; color: var(--neon-green); margin-top: 8px;">Please wait a moment</p>
+    </div>
+  </div>
+
+  <!-- POPUP: SUCCESSFUL KEY PURCHASE -->
+  <div id="modalSuccess" class="overlay">
+    <div class="modal-box">
+      <i class="fa-solid fa-circle-check" style="font-size: 44px; color: var(--neon-green); margin-bottom: 6px;"></i>
+      <h2 style="font-family: 'Teko'; font-size: 28px; letter-spacing: 1px;">PURCHASE SUCCESS!</h2>
+      <p style="font-size: 12px; color: var(--neon-green); font-weight: 700;">Key Copied to Clipboard Automatically!</p>
+      
+      <div id="txtKeyOutput" class="key-screen">XXXXXXXX-XXXX-XXXX</div>
+
+      <button class="btn-action" onclick="copyKeyResult()" style="margin-bottom: 8px;">
+        <i class="fa-solid fa-copy"></i> Copy Key Again
+      </button>
+      <button class="btn-modal-close" onclick="closeSuccessModal()">
+        <i class="fa-solid fa-check"></i> Done
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: SERVER PROBLEM (FILTERED PROFESSIONAL ERROR) -->
+  <div id="modalError" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-red); box-shadow: 0 0 35px rgba(255, 0, 85, 0.35);">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 44px; color: var(--neon-red); margin-bottom: 6px;"></i>
+      <h2 style="font-family: 'Teko'; font-size: 26px; color: var(--neon-red); letter-spacing: 1px;">SERVER PROBLEM</h2>
+      <p style="font-size: 14px; color: #fff; margin: 8px 0 4px 0;" id="txtErrorDetails">Temporary issue generating key.</p>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Please contact support to complete your order:</p>
+
+      <a href="https://wa.me/916289600365" target="_blank" class="whatsapp-support-badge" style="margin-bottom: 14px;">
+        <span class="whatsapp-support-text">
+          <i class="fa-brands fa-whatsapp" style="font-size: 15px;"></i> WhatsApp Support Owner +91 6289600365
+        </span>
+      </a>
+
+      <button class="btn-action" style="background: linear-gradient(90deg, #ff0055, #9d4edd);" onclick="closeErrorModal()">
+        Understand
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: MAINTENANCE OR BAN -->
+  <div id="modalLockdown" class="overlay">
+    <div class="modal-box" style="border-color: var(--neon-red); box-shadow: 0 0 50px rgba(255, 0, 85, 0.5);">
+      <i class="fa-solid fa-shield-virus" style="font-size: 50px; color: var(--neon-red); margin-bottom: 10px;"></i>
+      <h2 id="lockdownTitle" style="font-family: 'Teko'; font-size: 30px; color: var(--neon-red);">ACCESS RESTRICTED</h2>
+      <p id="lockdownMessage" style="font-size: 14px; color: #fff; margin: 12px 0 16px 0;">Please contact administrator.</p>
+      
+      <a href="https://wa.me/916289600365" target="_blank" class="whatsapp-support-badge" style="margin-bottom: 12px;">
+        <span class="whatsapp-support-text">
+          <i class="fa-brands fa-whatsapp" style="font-size: 15px;"></i> Contact Admin via WhatsApp
+        </span>
+      </a>
+
+      <button id="btnLockdownDismiss" class="btn-modal-close" style="display:none;" onclick="closeLockdown()">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: DEPOSIT HUB -->
+  <div id="modalDepositHub" class="overlay">
+    <div class="modal-box">
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: var(--neon-cyan); margin-bottom: 14px;">DEPOSIT OPTIONS</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn-action" onclick="openAddDepositStep1()">
+          <i class="fa-solid fa-plus-circle"></i> Add Deposit
+        </button>
+        <button class="btn-action" style="background: rgba(255,255,255,0.08);" onclick="openPaymentHistoryModal()">
+          <i class="fa-solid fa-receipt"></i> Payment History
+        </button>
+      </div>
+      <button class="btn-modal-close" onclick="closeDepositHub()">
+        <i class="fa-solid fa-xmark"></i> Close
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: ADD DEPOSIT STEP 1 -->
+  <div id="modalDepositStep1" class="overlay">
+    <div class="modal-box">
+      <h3 style="font-family: 'Teko'; font-size: 24px; color: var(--neon-cyan); margin-bottom: 8px;">ENTER AMOUNT</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Set how much balance you want to add:</p>
+      <input type="number" id="inputCustomDepositAmt" class="input-box" placeholder="Enter Amount (e.g. 100)" />
+      <button class="btn-action" onclick="proceedToDynamicQR()">
+        <i class="fa-solid fa-qrcode"></i> Generate QR Code
+      </button>
+      <button class="btn-modal-close" onclick="closeDepositStep1()">
+        <i class="fa-solid fa-arrow-left"></i> Back
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: ADD DEPOSIT STEP 2 -->
+  <div id="modalDepositQR" class="overlay">
+    <div class="modal-box">
+      <h3 style="font-family: 'Teko'; font-size: 24px; color: var(--neon-cyan);">SCAN TO PAY ₹<span id="lblQrAmount">0</span></h3>
+      <p style="font-size: 12px; color: var(--text-muted);">Pay using GooglePay, PhonePe or Paytm</p>
+      
+      <div class="qr-frame">
+        <img id="dynamicQrImg" src="" alt="Dynamic UPI QR" />
+      </div>
+
+      <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; margin-bottom: 10px; font-size: 12px; text-align: left;">
+        <div style="color: var(--text-muted);">Receiver Account: <span id="lblReceiverName" style="color: var(--neon-green); font-weight: 700;">SAHARAJ OFFICIAL</span></div>
+        <div style="color: var(--text-muted);">Receiver UPI: <span id="lblReceiverUpi" style="color: #fff; font-weight: 700;">saharaj@upi</span></div>
+      </div>
+
+      <input type="text" id="inputSenderName" class="input-box" placeholder="Your Sender Account Name (e.g. Rahul)" />
+      <input type="text" id="inputDepositUtr" class="input-box" placeholder="12-digit UPI Ref / UTR No." />
+
+      <button class="btn-action" onclick="submitDepositPayment()">
+        <i class="fa-solid fa-paper-plane"></i> Submit Request
+      </button>
+      <button class="btn-modal-close" onclick="closeDepositQR()">
+        <i class="fa-solid fa-xmark"></i> Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: DEPOSIT HISTORY -->
+  <div id="modalPaymentHistory" class="overlay">
+    <div class="modal-box" style="max-width: 440px;">
+      <h3 style="font-family: 'Teko'; font-size: 24px; color: var(--neon-cyan); margin-bottom: 10px;">DEPOSIT REQUEST HISTORY</h3>
+      <div id="paymentHistoryList" style="display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; text-align: left;">
+        <div style="font-size: 13px; color: var(--text-muted); text-align: center;">No deposit records found</div>
+      </div>
+      <button class="btn-modal-close" onclick="closePaymentHistoryModal()">
+        <i class="fa-solid fa-xmark"></i> Close
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: USER PROFILE -->
+  <div id="modalProfile" class="overlay">
+    <div class="modal-box">
+      <i class="fa-solid fa-circle-user" style="font-size: 46px; color: var(--neon-cyan); margin-bottom: 6px;"></i>
+      <h3 style="font-family: 'Teko'; font-size: 26px; color: #fff;" id="profileUsername">---</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 10px 0;">
+        <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
+          <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Spent</div>
+          <div style="font-family: 'Teko'; font-size: 24px; color: var(--neon-green);" id="lblTotalSpent">₹0</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.5); padding: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
+          <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Keys</div>
+          <div style="font-family: 'Teko'; font-size: 24px; color: var(--neon-gold);" id="lblTotalKeys">0</div>
+        </div>
+      </div>
+
+      <a href="https://wa.me/916289600365" target="_blank" class="whatsapp-support-badge" style="margin-bottom: 12px;">
+        <span class="whatsapp-support-text">
+          <i class="fa-brands fa-whatsapp" style="font-size: 15px;"></i> WhatsApp Support Owner +91 6289600365
+        </span>
+      </a>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; text-align: left;">
+        <div style="font-size: 12px; color: var(--neon-cyan); font-weight: 700; margin-bottom: 6px;">CHANGE PASSWORD</div>
+        <input type="password" id="oldPassword" class="input-box" placeholder="Old Password" />
+        <input type="password" id="newPassword" class="input-box" placeholder="New Password" />
+        <button class="btn-action" onclick="updatePassword()">
+          <i class="fa-solid fa-key"></i> Update Password
+        </button>
+      </div>
+
+      <button onclick="logoutUser()" class="btn-action" style="background: rgba(255, 0, 85, 0.15); border: 1px solid var(--neon-red); color: var(--neon-red); margin-top: 10px;">
+        <i class="fa-solid fa-power-off"></i> Logout
+      </button>
+
+      <button class="btn-modal-close" onclick="closeProfileModal()">
+        <i class="fa-solid fa-xmark"></i> Close
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP: KEY HISTORY -->
+  <div id="modalKeyHistory" class="overlay">
+    <div class="modal-box" style="max-width: 440px;">
+      <h3 style="font-family: 'Teko'; font-size: 24px; color: var(--neon-cyan); margin-bottom: 12px;">PURCHASED LICENSE KEYS</h3>
+      <div id="keyHistoryList" style="display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; text-align: left;">
+        <div style="font-size: 13px; color: var(--text-muted); text-align: center;">No purchase yet</div>
+      </div>
+      <button class="btn-modal-close" onclick="closeKeyHistoryModal()">
+        <i class="fa-solid fa-xmark"></i> Close Window
+      </button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-msg"></div>
+
+  <script>
+    const BACKEND_BASE = "https://saharaj-server.onrender.com";
+    const BACKEND_BUY_URL = `${BACKEND_BASE}/api/buy`;
+    const FIREBASE_BASE = "https://army-saharaj-aimbot-default-rtdb.firebaseio.com";
+
+    let currentUser = null;
+    let userBalance = 0;
+    let cachedGadgets = {};
+    let selectedGadget = null;
+    let selectedPackage = null;
+    let currentDepositAmount = 0;
+
+    // ============================================================
+    // 2-SECOND REALISTIC LIGHTNING ELECTRIC SPARK GENERATOR
+    // ============================================================
+    const canvas = document.getElementById('lightningCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function createLightningBranch(x1, y1, x2, y2, displacement, iterations) {
+      if (iterations === 0) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        return;
+      }
+      const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displacement;
+      const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displacement;
+      createLightningBranch(x1, y1, midX, midY, displacement / 1.7, iterations - 1);
+      createLightningBranch(midX, midY, x2, y2, displacement / 1.7, iterations - 1);
+    }
+
+    function triggerElectricLightning() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX = 55;
+      const centerY = 55;
+      const radius = 40;
+
+      // Draw 3 to 5 jagged lightning arcs around the round logo
+      const boltCount = Math.floor(Math.random() * 3) + 3;
+
+      for (let i = 0; i < boltCount; i++) {
+        const angle1 = Math.random() * Math.PI * 2;
+        const angle2 = angle1 + (Math.random() * 1.4 - 0.7);
+
+        const x1 = centerX + Math.cos(angle1) * (radius - 5);
+        const y1 = centerY + Math.sin(angle1) * (radius - 5);
+        const x2 = centerX + Math.cos(angle2) * (radius + 12);
+        const y2 = centerY + Math.sin(angle2) * (radius + 12);
+
+        // Core electric glow
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = '#00f0ff';
+        ctx.strokeStyle = Math.random() > 0.4 ? '#ffffff' : '#00f0ff';
+        ctx.lineWidth = Math.random() * 1.5 + 0.8;
+
+        createLightningBranch(x1, y1, x2, y2, 18, 4);
+      }
+
+      // Automatically clear spark after flash
+      setTimeout(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 160);
+    }
+
+    // Trigger thunder lightning burst every 2 seconds
+    setInterval(() => {
+      triggerElectricLightning();
+      // Double strike effect like real thunder
+      setTimeout(triggerElectricLightning, 90);
+    }, 2000);
+
+    // Render backend ping
+    function pingRenderServer() {
+      fetch(`${BACKEND_BASE}/`, { method: "GET", cache: "no-cache", mode: "cors" })
+        .then(res => res.json())
+        .then(() => {
+          const badge = document.getElementById('lblLiveStatus');
+          if (badge) badge.innerHTML = '<i class="fa-solid fa-bolt"></i> 24/7 ONLINE';
+        })
+        .catch(() => {});
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      pingRenderServer();
+
+      const savedUser = localStorage.getItem('saharaj_active_user');
+      if (savedUser) {
+        initPortal(savedUser);
+      }
+
+      await fetchCloudConfig();
+      await fetchGadgets();
+
+      setInterval(() => {
+        fetchCloudConfig();
+        fetchGadgets();
+        if (currentUser) {
+          syncUserStatusRealtime();
+        }
+      }, 3500);
+
+      setInterval(pingRenderServer, 180000);
+    });
+
+    async function fetchCloudConfig() {
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/config.json`);
+        if (!res.ok) return;
+        const config = await res.json();
+        if (!config) return;
+
+        // Dynamic Brand Logo & Name sync from Admin
+        if (config.brandLogo) {
+          document.getElementById('imgBrandLogo').src = config.brandLogo;
+        }
+
+        if (config.brandName) {
+          document.getElementById('lblBrandName').innerText = config.brandName;
+        }
+
+        if (config.upi) {
+          document.getElementById('lblReceiverUpi').innerText = config.upi;
+        }
+
+        if (config.receiverName) {
+          document.getElementById('lblReceiverName').innerText = config.receiverName;
+        }
+
+        if (config.maintenance) {
+          checkMaintenance(config.maintenance);
+        }
+      } catch (e) {}
+    }
+
+    async function fetchGadgets() {
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/gadgets.json`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data) {
+          cachedGadgets = data;
+          if (document.getElementById('screenGadgetStore').style.display === 'flex') {
+            handleGadgetSearch();
+          }
+        }
+      } catch (e) {}
+    }
+
+    function openFullscreenStore() {
+      document.getElementById('screenGadgetStore').style.display = 'flex';
+      document.getElementById('inputGadgetSearch').value = '';
+      renderGadgetsList(Object.keys(cachedGadgets));
+    }
+
+    function closeFullscreenStore() {
+      document.getElementById('screenGadgetStore').style.display = 'none';
+    }
+
+    function handleGadgetSearch() {
+      const rawQuery = document.getElementById('inputGadgetSearch').value.trim().toLowerCase();
+      const cleanQuery = rawQuery.replace(/\s+/g, '');
+      const allKeys = Object.keys(cachedGadgets);
+
+      if (!cleanQuery) {
+        renderGadgetsList(allKeys);
+        return;
+      }
+
+      const matched = allKeys.map(k => {
+        const gName = (cachedGadgets[k].name || '').toLowerCase();
+        const cleanName = gName.replace(/\s+/g, '');
+        let score = 0;
+
+        if (cleanName.startsWith(cleanQuery)) {
+          score = 100;
+        } else if (cleanName.includes(cleanQuery)) {
+          score = 50;
+        } else {
+          let qIdx = 0;
+          for (let i = 0; i < cleanName.length && qIdx < cleanQuery.length; i++) {
+            if (cleanName[i] === cleanQuery[qIdx]) qIdx++;
+          }
+          if (qIdx === cleanQuery.length) score = 25;
+        }
+
+        return { key: k, score };
+      })
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(item => item.key);
+
+      renderGadgetsList(matched);
+    }
+
+    function renderGadgetsList(keys) {
+      const container = document.getElementById('storeGadgetsContainer');
+
+      if (!keys || keys.length === 0) {
+        container.innerHTML = `<div style="text-align: center; color: var(--neon-red); font-size: 13px; padding: 30px 0;">No matching gadgets found.</div>`;
+        return;
+      }
+
+      container.innerHTML = keys.map(k => {
+        const g = cachedGadgets[k];
+        const activePackages = (g.packages || []).filter(p => p.enabled);
+        const actionBtn = g.actionBtn || {};
+        const imgUrl = (g.imageUrl || '').trim();
+
+        return `
+          <div class="gadget-card-row" onclick="openGadgetPackageModal('${k}')">
+            <div class="gadget-header-wrap">
+              <div class="gadget-title-flex">
+                <div class="gadget-thumb-circle">
+                  ${imgUrl ? `<img src="${imgUrl}" alt="Gadget" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3616/3616930.png'" />` 
+                           : `<i class="fa-solid fa-microchip" style="color: var(--neon-cyan); font-size: 18px;"></i>`}
+                </div>
+                <div class="gadget-name-style">${g.name}</div>
+              </div>
+              <i class="fa-solid fa-arrow-right-long" style="color: var(--neon-cyan); font-size: 18px;"></i>
+            </div>
+
+            <div class="gadget-desc-style">${g.details || 'High performance gaming key license.'}</div>
+            
+            <div class="gadget-footer-style">
+              <span style="font-size: 11px; color: var(--neon-green); font-weight: 700;">
+                <i class="fa-solid fa-boxes-stacked"></i> ${activePackages.length} Plans Active
+              </span>
+
+              ${actionBtn.enabled && actionBtn.url ? `
+                <a href="${actionBtn.url}" target="_blank" class="btn-gadget-setup" onclick="event.stopPropagation()">
+                  <i class="fa-solid fa-up-right-from-square"></i> ${actionBtn.title || 'SETUP'}
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openGadgetPackageModal(gadgetId) {
+      selectedGadget = cachedGadgets[gadgetId];
+      if (!selectedGadget) return;
+
+      selectedPackage = null;
+      document.getElementById('lblSelectedGadgetTitle').innerText = selectedGadget.name.toUpperCase();
+      
+      const grid = document.getElementById('modalPkgGrid');
+      const availablePkgs = (selectedGadget.packages || []).filter(p => p.enabled);
+
+      if (availablePkgs.length === 0) {
+        grid.innerHTML = `<div style="grid-column: span 2; color: var(--neon-red); font-size: 13px; padding: 15px 0;">All packages currently offline for this gadget.</div>`;
+      } else {
+        grid.innerHTML = availablePkgs.map(p => {
+          const isSoldOut = !!p.soldOut;
+          const hasDiscount = p.discount && p.discount > 0;
+
+          return `
+            <div class="pkg-card-slim ${isSoldOut ? 'sold-out' : ''}" onclick="selectPackage(${p.optionId}, '${p.userLabel}', ${p.price}, '${p.providerName}', this)">
+              ${isSoldOut ? `<span class="badge-sold-out">SOLD OUT</span>` : (hasDiscount ? `<span class="badge-disc">${p.discount}% OFF</span>` : '')}
+              
+              <div class="pkg-name-slim">${p.userLabel || 'License'}</div>
+              
+              <div class="pkg-tag-slim">
+                ${hasDiscount ? `<span style="text-decoration: line-through; color: var(--text-muted); font-size: 10px;">₹${Math.round(p.price / (1 - p.discount/100))}</span>` : ''}
+                <span>₹${p.price}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('modalBuyList').style.display = 'flex';
+    }
+
+    function selectPackage(optionId, label, price, providerName, elem) {
+      selectedPackage = { optionId, label, price: parseFloat(price) || 0, providerName };
+      document.querySelectorAll('#modalPkgGrid .pkg-card-slim').forEach(c => c.classList.remove('active'));
+      elem.classList.add('active');
+    }
+
+    function closeBuyListModal(userClickedClose = false) {
+      document.getElementById('modalBuyList').style.display = 'none';
+      if (userClickedClose) {
+        selectedPackage = null;
+      }
+    }
+
+    /* REALTIME BALANCE CHECK */
+    async function initiateStepOne() {
+      if (!currentUser) return notify("Login required");
+
+      if (!selectedPackage) {
+        return notify("Please select a package first!");
+      }
+
+      try {
+        const wRes = await fetch(`${FIREBASE_BASE}/wallets/${currentUser}.json`);
+        if (wRes.ok) {
+          const cloudBal = await wRes.json();
+          if (cloudBal !== null && typeof cloudBal === 'number') {
+            userBalance = cloudBal;
+            document.getElementById('lblBalance').innerText = parseFloat(userBalance).toFixed(2);
+          }
+        }
+      } catch (e) {}
+
+      if (userBalance < selectedPackage.price) {
+        closeBuyListModal(false);
+        document.getElementById('lblLowBalPkg').innerText = `${selectedGadget.name} (${selectedPackage.label})`;
+        document.getElementById('lblLowBalReq').innerText = '₹' + selectedPackage.price;
+        document.getElementById('lblLowBalCur').innerText = '₹' + parseFloat(userBalance).toFixed(2);
+        
+        document.getElementById('modalLowBalance').style.display = 'flex';
+        return;
+      }
+
+      document.getElementById('lblConfirmPkg1').innerText = `${selectedGadget.name} (${selectedPackage.label})`;
+      document.getElementById('lblConfirmPrice1').innerText = '₹' + selectedPackage.price;
+      document.getElementById('modalConfirmStep1').style.display = 'flex';
+    }
+
+    function closeLowBalModal() {
+      document.getElementById('modalLowBalance').style.display = 'none';
+    }
+
+    function goToDepositFromLowBal() {
+      closeLowBalModal();
+      closeFullscreenStore();
+      openDepositHub();
+    }
+
+    function closeConfirmStep1() {
+      document.getElementById('modalConfirmStep1').style.display = 'none';
+    }
+
+    function proceedToStepTwo() {
+      closeConfirmStep1();
+      document.getElementById('lblConfirmPrice2').innerText = '₹' + selectedPackage.price;
+      document.getElementById('modalConfirmStep2').style.display = 'flex';
+    }
+
+    function closeConfirmStep2() {
+      document.getElementById('modalConfirmStep2').style.display = 'none';
+    }
+
+    /* SECURE PURCHASE WITH FILTERED ERROR FOR PROVIDER BALANCE */
+    async function executeFinalPurchase() {
+      if (!selectedPackage || !selectedGadget) {
+        return notify("Selection error! Please reselect package.");
+      }
+
+      const targetPkg = { ...selectedPackage };
+      const targetGadget = { ...selectedGadget };
+
+      closeConfirmStep2();
+      closeBuyListModal(false);
+
+      document.getElementById('modalLoading').style.display = 'flex';
+
+      async function requestBackend(attempt = 1) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 45000);
+
+          const response = await fetch(BACKEND_BUY_URL, {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              uid: currentUser,
+              product_id: targetGadget.productId,
+              option_id: targetPkg.optionId,
+              duration: targetPkg.providerName || targetPkg.label,
+              price: targetPkg.price
+            }),
+            signal: controller.signal
+          });
+
+          clearTimeout(timeoutId);
+          return await response.json();
+        } catch (err) {
+          if (attempt === 1) {
+            await new Promise(r => setTimeout(r, 3000));
+            return await requestBackend(2);
+          }
+          throw err;
+        }
+      }
+
+      try {
+        const data = await requestBackend();
+        document.getElementById('modalLoading').style.display = 'none';
+
+        if (data && (data.status === "success" || data.key)) {
+          const generatedKey = data.key || data.license_key || "KEY_DELIVERED";
+          
+          userBalance -= targetPkg.price;
+          document.getElementById('lblBalance').innerText = parseFloat(userBalance).toFixed(2);
+
+          await Promise.all([
+            fetch(`${FIREBASE_BASE}/wallets/${currentUser}.json`, { method: "PUT", body: JSON.stringify(userBalance) }),
+            fetch(`${FIREBASE_BASE}/sold_keys.json`, {
+              method: "POST",
+              body: JSON.stringify({
+                user: currentUser,
+                gadgetId: targetGadget.id,
+                gadgetName: targetGadget.name,
+                key: generatedKey,
+                pkg: `${targetGadget.name} (${targetPkg.label})`,
+                price: targetPkg.price,
+                time: new Date().toLocaleString()
+              })
+            })
+          ]);
+
+          saveKeyHistoryLocal(generatedKey, `${targetGadget.name} (${targetPkg.label})`, targetPkg.price);
+          navigator.clipboard.writeText(generatedKey);
+
+          document.getElementById('txtKeyOutput').innerText = generatedKey;
+          document.getElementById('modalSuccess').style.display = 'flex';
+          
+          selectedPackage = null;
+        } else {
+          // প্রোভাইডারের কম ব্যালেন্সের মেসেজ ফিল্টার করে প্রফেশনাল মেসেজ দেখানো
+          let rawMsg = data.message || "";
+          if (rawMsg.toLowerCase().includes("low balance") || rawMsg.toLowerCase().includes("wallet")) {
+            rawMsg = "Item temporarily out of stock. Please contact support to complete your order.";
+          }
+          showErrorModal(rawMsg || "Provider error: Server busy or out of keys.");
+        }
+      } catch (err) {
+        document.getElementById('modalLoading').style.display = 'none';
+        showErrorModal("Server connection error: " + err.message + ". Please ensure your internet is active.");
+      }
+    }
+
+    function showErrorModal(msg) {
+      if (msg) document.getElementById('txtErrorDetails').innerText = msg;
+      document.getElementById('modalError').style.display = 'flex';
+    }
+
+    function closeErrorModal() {
+      document.getElementById('modalError').style.display = 'none';
+    }
+
+    async function syncUserStatusRealtime() {
+      if (!currentUser) return;
+
+      try {
+        const wRes = await fetch(`${FIREBASE_BASE}/wallets/${currentUser}.json`);
+        if (wRes.ok) {
+          const bal = await wRes.json();
+          if (bal !== null && typeof bal === 'number') {
+            userBalance = bal;
+            document.getElementById('lblBalance').innerText = parseFloat(userBalance).toFixed(2);
+          }
+        }
+
+        const bRes = await fetch(`${FIREBASE_BASE}/banned/${currentUser}.json`);
+        if (bRes.ok) {
+          const banData = await bRes.json();
+          if (banData) {
+            document.getElementById('lockdownTitle').innerText = "ACCOUNT SUSPENDED";
+            document.getElementById('lockdownMessage').innerText = banData.reason || "Your account has been banned by Administrator.";
+            document.getElementById('btnLockdownDismiss').style.display = 'none';
+            document.getElementById('modalLockdown').style.display = 'flex';
+            return;
+          }
+        }
+
+        const nRes = await fetch(`${FIREBASE_BASE}/notices/${currentUser}.json`);
+        if (nRes.ok) {
+          const nData = await nRes.json();
+          if (nData && !nData.read) {
+            document.getElementById('lockdownTitle').innerText = "ADMIN NOTICE";
+            document.getElementById('lockdownMessage').innerText = nData.message;
+            document.getElementById('btnLockdownDismiss').style.display = nData.canClose ? 'flex' : 'none';
+            document.getElementById('modalLockdown').style.display = 'flex';
+          }
+        }
+      } catch (e) {}
+    }
+
+    function checkMaintenance(maint) {
+      if (maint && maint.active) {
+        document.getElementById('lockdownTitle').innerText = "SERVER MAINTENANCE";
+        document.getElementById('lockdownMessage').innerText = maint.reason || "Server is under scheduled maintenance.";
+        document.getElementById('btnLockdownDismiss').style.display = 'none';
+        document.getElementById('modalLockdown').style.display = 'flex';
+      } else {
+        if (document.getElementById('lockdownTitle').innerText === "SERVER MAINTENANCE") {
+          document.getElementById('modalLockdown').style.display = 'none';
+        }
+      }
+    }
+
+    async function closeLockdown() {
+      document.getElementById('modalLockdown').style.display = 'none';
+      if (currentUser) {
+        try {
+          await fetch(`${FIREBASE_BASE}/notices/${currentUser}/read.json`, { method: "PUT", body: "true" });
+        } catch(e) {}
+      }
+    }
+
+    function initPortal(username) {
+      currentUser = username;
+      document.getElementById('viewAuth').style.display = 'none';
+      document.getElementById('viewPortal').style.display = 'flex';
+      document.getElementById('lblUser').innerText = username.toUpperCase();
+      syncUserStatusRealtime();
+    }
+
+    async function registerUser() {
+      const u = document.getElementById('inputUsername').value.trim().toLowerCase();
+      const p = document.getElementById('inputPassword').value.trim();
+      if (!u || !p) return notify("Enter Username & Password");
+
+      try {
+        const checkRes = await fetch(`${FIREBASE_BASE}/users/${u}.json`);
+        const exists = await checkRes.json();
+        if (exists) return notify("Account already exists! Please Login.");
+
+        await Promise.all([
+          fetch(`${FIREBASE_BASE}/users/${u}.json`, { method: "PUT", body: JSON.stringify(p) }),
+          fetch(`${FIREBASE_BASE}/wallets/${u}.json`, { method: "PUT", body: "0" })
+        ]);
+
+        localStorage.setItem('saharaj_active_user', u);
+        initPortal(u);
+        notify("Registered Successfully!");
+      } catch (e) {
+        notify("Network error connecting Firebase");
+      }
+    }
+
+    async function loginUser() {
+      const u = document.getElementById('inputUsername').value.trim().toLowerCase();
+      const p = document.getElementById('inputPassword').value.trim();
+      if (!u || !p) return notify("Enter Username & Password");
+
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/users/${u}.json`);
+        const cloudPass = await res.json();
+
+        if (cloudPass === null) {
+          await Promise.all([
+            fetch(`${FIREBASE_BASE}/users/${u}.json`, { method: "PUT", body: JSON.stringify(p) }),
+            fetch(`${FIREBASE_BASE}/wallets/${u}.json`, { method: "PUT", body: "0" })
+          ]);
+          localStorage.setItem('saharaj_active_user', u);
+          initPortal(u);
+          notify("Account created and logged in!");
+          return;
+        }
+
+        if (cloudPass === p) {
+          localStorage.setItem('saharaj_active_user', u);
+          initPortal(u);
+          notify("Login Successful!");
+        } else {
+          notify("Incorrect Password!");
+        }
+      } catch (e) {
+        notify("Network error connecting Firebase");
+      }
+    }
+
+    function logoutUser() {
+      localStorage.removeItem('saharaj_active_user');
+      location.reload();
+    }
+
+    function openDepositHub() {
+      document.getElementById('modalDepositHub').style.display = 'flex';
+    }
+    function closeDepositHub() {
+      document.getElementById('modalDepositHub').style.display = 'none';
+    }
+
+    function openAddDepositStep1() {
+      closeDepositHub();
+      document.getElementById('modalDepositStep1').style.display = 'flex';
+    }
+    function closeDepositStep1() {
+      document.getElementById('modalDepositStep1').style.display = 'none';
+    }
+
+    function proceedToDynamicQR() {
+      const amt = parseFloat(document.getElementById('inputCustomDepositAmt').value);
+      if (!amt || amt <= 0) return notify("Enter valid deposit amount!");
+
+      currentDepositAmount = amt;
+      const upi = document.getElementById('lblReceiverUpi').innerText || 'saharaj@upi';
+      const receiverName = document.getElementById('lblReceiverName').innerText || 'SAHARAJ OFFICIAL';
+
+      document.getElementById('lblQrAmount').innerText = amt;
+      document.getElementById('dynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(receiverName)}&am=${amt}&cu=INR`;
+
+      closeDepositStep1();
+      document.getElementById('modalDepositQR').style.display = 'flex';
+    }
+
+    function closeDepositQR() {
+      document.getElementById('modalDepositQR').style.display = 'none';
+    }
+
+    async function submitDepositPayment() {
+      const sender = document.getElementById('inputSenderName').value.trim();
+      const utr = document.getElementById('inputDepositUtr').value.trim();
+
+      if (!sender) return notify("Enter sender account name!");
+      if (utr.length < 6) return notify("Enter valid 12-digit UTR number!");
+
+      const newRecord = {
+        id: 'DEP_' + Date.now(),
+        user: currentUser,
+        amount: currentDepositAmount,
+        senderName: sender,
+        utr: utr,
+        status: 'Pending',
+        requestTime: new Date().toLocaleString(),
+        actionTime: 'Waiting for Admin'
+      };
+
+      try {
+        await fetch(`${FIREBASE_BASE}/deposits/${newRecord.id}.json`, {
+          method: "PUT",
+          body: JSON.stringify(newRecord)
+        });
+
+        closeDepositQR();
+        notify("Deposit Request Submitted Live to Admin!");
+        document.getElementById('inputSenderName').value = '';
+        document.getElementById('inputDepositUtr').value = '';
+        document.getElementById('inputCustomDepositAmt').value = '';
+      } catch (e) {
+        notify("Failed to submit to Firebase");
+      }
+    }
+
+    async function openPaymentHistoryModal() {
+      closeDepositHub();
+      const container = document.getElementById('paymentHistoryList');
+      container.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); text-align: center;">Fetching history from Firebase...</div>`;
+      document.getElementById('modalPaymentHistory').style.display = 'flex';
+
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/deposits.json`);
+        const allDeps = (await res.json()) || {};
+        const userDeposits = Object.values(allDeps).filter(d => d.user === currentUser);
+
+        if (userDeposits.length === 0) {
+          container.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); text-align: center;">No deposit records found</div>`;
+        } else {
+          container.innerHTML = userDeposits.map(d => {
+            let statusColor = d.status === 'Approved' ? 'var(--neon-green)' : (d.status === 'Rejected' ? 'var(--neon-red)' : 'var(--neon-gold)');
+            return `
+              <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="font-family:'Teko'; font-size:22px; color: #fff;">₹${d.amount}</div>
+                  <div style="font-size:12px; font-weight:700; color:${statusColor}; text-transform:uppercase;">${d.status}</div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">UTR: <span style="color:#fff;">${d.utr}</span></div>
+                <div style="font-size: 11px; color: var(--text-muted);">Requested: ${d.requestTime}</div>
+                <div style="font-size: 11px; color: ${statusColor};">Admin Action: ${d.actionTime}</div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        container.innerHTML = `<div style="font-size: 13px; color: var(--neon-red); text-align: center;">Could not load history</div>`;
+      }
+    }
+
+    function closePaymentHistoryModal() {
+      document.getElementById('modalPaymentHistory').style.display = 'none';
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileUsername').innerText = currentUser.toUpperCase();
+      const hist = JSON.parse(localStorage.getItem('saharaj_history_' + currentUser) || '[]');
+      let totalSpent = 0;
+      hist.forEach(h => totalSpent += (parseFloat(h.price) || 0));
+
+      document.getElementById('lblTotalSpent').innerText = '₹' + totalSpent.toFixed(2);
+      document.getElementById('lblTotalKeys').innerText = hist.length;
+      document.getElementById('modalProfile').style.display = 'flex';
+    }
+
+    function closeProfileModal() {
+      document.getElementById('modalProfile').style.display = 'none';
+      document.getElementById('oldPassword').value = '';
+      document.getElementById('newPassword').value = '';
+    }
+
+    async function updatePassword() {
+      const oldPass = document.getElementById('oldPassword').value.trim();
+      const newPass = document.getElementById('newPassword').value.trim();
+
+      if (!oldPass || !newPass) return notify("Enter both Old & New Passwords!");
+
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/users/${currentUser}.json`);
+        const curPass = await res.json();
+
+        if (curPass !== oldPass) {
+          return notify("Incorrect Old Password!");
+        }
+
+        await fetch(`${FIREBASE_BASE}/users/${currentUser}.json`, { method: "PUT", body: JSON.stringify(newPass) });
+        notify("Password Changed on Firebase!");
+        closeProfileModal();
+      } catch (e) {
+        notify("Failed to change password");
+      }
+    }
+
+    function saveKeyHistoryLocal(key, pkg, price) {
+      let hist = JSON.parse(localStorage.getItem('saharaj_history_' + currentUser) || '[]');
+      hist.unshift({
+        key: key,
+        pkg: pkg,
+        price: price,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toLocaleDateString()
+      });
+      localStorage.setItem('saharaj_history_' + currentUser, JSON.stringify(hist));
+    }
+
+    async function openKeyHistoryModal() {
+      const container = document.getElementById('keyHistoryList');
+      container.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); text-align: center;">Loading keys from Firebase...</div>`;
+      document.getElementById('modalKeyHistory').style.display = 'flex';
+
+      try {
+        const res = await fetch(`${FIREBASE_BASE}/sold_keys.json`);
+        const allKeys = (await res.json()) || {};
+        const myKeys = Object.values(allKeys).filter(k => k.user === currentUser);
+
+        if (myKeys.length === 0) {
+          container.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); text-align: center;">No purchase yet</div>`;
+        } else {
+          container.innerHTML = myKeys.map(h => `
+            <div style="background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.06); padding: 10px 12px; border-radius: 10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size: 13px; color: var(--neon-cyan); font-weight: 700;">${h.pkg} (₹${h.price})</span>
+                <span style="font-size: 11px; color: var(--text-muted);">${h.time}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <span style="font-family: monospace; font-size: 13px; color: var(--neon-green); word-break:break-all;">${h.key}</span>
+                <button onclick="navigator.clipboard.writeText('${h.key}'); notify('Copied!');" style="background:none; border:none; color: #fff; cursor:pointer; padding-left:8px;">
+                  <i class="fa-solid fa-copy"></i>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        container.innerHTML = `<div style="font-size: 13px; color: var(--neon-red); text-align: center;">Could not load keys</div>`;
+      }
+    }
+
+    function closeKeyHistoryModal() {
+      document.getElementById('modalKeyHistory').style.display = 'none';
+    }
+
+    function copyKeyResult() {
+      const k = document.getElementById('txtKeyOutput').innerText;
+      navigator.clipboard.writeText(k);
+      notify("License Key Copied!");
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('modalSuccess').style.display = 'none';
+    }
+
+    function notify(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2800);
+    }
+  </script>
+</body>
+</html>
