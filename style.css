@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #baa797;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 16px 8px 30px;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+/* ক্যানভাস লেয়ার */
+#fireCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* থ্রিডি ফাটা পাথরের কার্ড */
+.magma-plate {
+  position: relative;
+  border-radius: 26px;
+  padding: 22px 16px;
+  background: 
+    radial-gradient(ellipse at center, rgba(255, 60, 0, 0.45) 0%, rgba(20, 5, 2, 0.85) 85%),
+    url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=700') center/cover;
+  border: 3px solid #ffaa00;
+  box-shadow: 
+    0 14px 28px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px #ff3300,
+    inset 0 0 55px rgba(255, 120, 0, 0.4);
+  transform-style: preserve-3d;
+  perspective: 800px;
+  animation: lavaFlicker 1.4s infinite alternate ease-in-out;
+}
+
+.magma-plate.dark-plate {
+  background: 
+    radial-gradient(ellipse at center, rgba(255, 40, 0, 0.4) 0%, rgba(10, 3, 2, 0.95) 85%),
+    url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=700') center/cover;
+  border-color: #ff5500;
+}
+
+/* জ্বলন্ত লাভার পালস অ্যানিমেশন */
+@keyframes lavaFlicker {
+  0% {
+    box-shadow: 
+      0 0 16px #ff2200, 
+      0 0 35px #ff5500,
+      inset 0 0 20px #ff3300;
+    filter: brightness(0.96);
+  }
+  50% {
+    box-shadow: 
+      0 0 28px #ff4400, 
+      0 0 55px #ffaa00,
+      inset 0 0 35px #ff6600;
+    filter: brightness(1.08);
+  }
+  100% {
+    box-shadow: 
+      0 0 18px #ff1a00, 
+      0 0 38px #ff7700,
+      inset 0 0 22px #ff4400;
+    filter: brightness(1.0);
+  }
+}
+
+/* প্রোফাইল ফায়ার রিং */
+.profile-fire-box {
+  width: 125px;
+  height: 125px;
+  margin: 0 auto 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fire-turbulent-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ff0000, #ff7700, #ffff33, #ff3300, #ff0000, #ffaa00, #ff0000);
+  filter: blur(5px);
+  animation: spinFire 2.2s linear infinite;
+}
+
+@keyframes spinFire {
+  0% { transform: rotate(0deg) scale(0.97); }
+  50% { transform: rotate(180deg) scale(1.04); }
+  100% { transform: rotate(360deg) scale(0.97); }
+}
+
+.profile-img {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffcc00;
+  box-shadow: 0 0 15px #ff3300;
+  z-index: 2;
+}
+
+/* এমবসড টেক্সট */
+.stone-heading {
+  text-align: center;
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffe1bf;
+  text-shadow: 
+    2px 2px 2px #000,
+    -1px -1px 0 #331100,
+    0 0 12px #ff4400,
+    0 0 25px #ff1100;
+  margin-bottom: 6px;
+}
+
+.badge-online {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  margin: 0 auto 14px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1.5px solid #00ff88;
+  color: #00ff88;
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+/* বাটন ডিজাইন */
+.magma-btn {
+  position: relative;
+  background: rgba(14, 6, 4, 0.9);
+  border: 2px solid #ff6600;
+  border-radius: 22px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 
+    0 0 14px #ff3300,
+    inset 0 0 10px rgba(255, 60, 0, 0.7);
+  transition: transform 0.2s;
+}
+
+.magma-btn:active {
+  transform: scale(0.98);
+}
+
+/* বাটনের ভেতরের ফায়ার রিং */
+.btn-fire-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff6600 20%, #2b0800 80%);
+  border: 2px solid #ffee33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  box-shadow: 0 0 14px #ff4500, inset 0 0 6px #ffcc00;
+}
+
+/* ব্যালেন্স গ্রিড */
+.twin-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.stone-card-inner {
+  background: rgba(14, 6, 4, 0.9);
+  border: 2px solid #ff6600;
+  border-radius: 18px;
+  padding: 10px 12px;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(255, 60, 0, 0.5), inset 0 0 8px #ff2200;
+}
+
+.stone-card-inner small {
+  font-size: 11px;
+  color: #ffb88c;
+  font-weight: 700;
+  display: block;
+}
+
+.stone-card-inner strong {
+  font-size: 20px;
+  color: #ffdd44;
+  font-weight: 900;
+  text-shadow: 0 0 10px #ff3300;
+}
